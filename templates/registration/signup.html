@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - E-Scheduler{% endblock %}
+{% block page_header %}System Registration{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-8 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="p-8 border-b border-gray-100 text-center bg-gray-50">
+        <h2 class="text-2xl font-bold text-indigo-900">Create Account</h2>
+        <p class="text-sm text-gray-500 mt-2">Connect your identity to the academic database.</p>
+    </div>
+
+    <form method="POST" class="p-8">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {% for field in form %}
+                <div id="wrapper_{{ field.name }}" class="field-wrapper">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-sm transition">Register Identity</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const roleSelect = document.getElementById("id_role");
+        // These IDs match the field names in your Form class
+        const sectionWrapper = document.getElementById("div_id_section"); // Or just "wrapper_section"
+        const teacherWrapper = document.getElementById("div_id_teacher"); 
+
+        function toggleFields() {
+            if (roleSelect.value === 'student') {
+                document.getElementById("wrapper_section").style.display = "block";
+                document.getElementById("wrapper_teacher").style.display = "none";
+            } else {
+                document.getElementById("wrapper_section").style.display = "none";
+                document.getElementById("wrapper_teacher").style.display = "block";
+            }
+        }
+        roleSelect.addEventListener("change", toggleFields);
+        toggleFields(); // Initial call
+    });
+</script>
+{% endblock %}

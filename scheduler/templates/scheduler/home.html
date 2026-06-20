@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}E-Scheduler Portal | IUB{% endblock %}
+{% block page_header %}University Academic Portal{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            Welcome to the CS & IT Department
+        </h2>
+        <p class="mt-4 text-lg text-gray-500">
+            Select your portal below to view your real-time academic timetable.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <div class="relative group bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-500 transition">
+            <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                <i class="fa-solid fa-user-graduate text-2xl text-indigo-600"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Student Portal</h3>
+            <p class="text-gray-500 text-sm mb-6">Access your section's master timetable, room allocations, and course schedules.</p>
+            <a href="{% url 'student_dashboard' %}" class="inline-block bg-indigo-600 text-white font-medium px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition w-full text-center">
+                Enter Student Portal
+            </a>
+        </div>
+
+        <div class="relative group bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md hover:emerald-500 transition">
+            <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                <i class="fa-solid fa-chalkboard-user text-2xl text-emerald-600"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Faculty Portal</h3>
+            <p class="text-gray-500 text-sm mb-6">View your personalized teaching schedule, section assignments, and room locations.</p>
+            <a href="{% url 'teacher_dashboard' %}" class="inline-block bg-emerald-600 text-white font-medium px-5 py-2.5 rounded-lg hover:bg-emerald-700 transition w-full text-center">
+                Enter Faculty Portal
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

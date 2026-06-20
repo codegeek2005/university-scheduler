@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %}My Timetable{% endblock %}
+{% block page_header %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="p-4 bg-gray-200">
+    DEBUG: Section is {{ my_section.name }} | Matrix exists: {{ matrix|yesno:"Yes,No" }}
+</div>
+
+<div class="space-y-6">
+    {% if my_section and matrix %}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-4 bg-indigo-50 border-b border-indigo-100 flex items-center justify-between">
+            <h3 class="font-bold text-indigo-900">Your Official Timetable: 
+                <span class="text-indigo-600">{{ my_section.name }}</span>
+            </h3>
+            <span class="bg-indigo-200 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full"><i class="fa-solid fa-lock"></i> Locked View</span>
+        </div>
+        
+        <table class="w-full text-left text-sm text-gray-500 border-collapse">
+            <thead class="bg-gray-100 text-xs font-semibold uppercase text-gray-600">
+                <tr>
+                    <th class="p-4 border-r">Day</th>
+                    {% for slot in slots %}<th class="p-3 text-center border-r">Slot {{ slot }}</th>{% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for day in days %}
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-4 font-bold text-gray-700 bg-gray-50 border-r">{{ day }}</td>
+                    {% for slot in slots %}
+                    <td class="p-2 border-r h-24 align-top">
+                        {% with matrix|get_item:day|get_item:slot as entry %}
+                            {% if entry %}
+                                <div class="bg-indigo-50 border border-indigo-200 rounded p-2 shadow-sm h-full flex flex-col justify-between">
+                                    <div class="font-bold text-indigo-900 text-[11px]">{{ entry.course.course_code }}</div>
+                                    <div class="text-[10px] text-indigo-700 truncate">{{ entry.teacher.name }}</div>
+                                    <div class="text-[10px] text-gray-600 font-medium bg-white px-1 border self-start">{{ entry.room.name }}</div>
+                                </div>
+                            {% else %}
+                                <div class="text-center text-gray-300 text-xs mt-8 italic">Free</div>
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="bg-amber-50 border border-amber-200 text-amber-800 p-6 rounded-xl text-center shadow-sm">
+        <h3 class="font-bold">No Schedule Found</h3>
+        <p class="text-sm mt-1">Your account isn't linked to a section, or the coordinator hasn't initialized the solver.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

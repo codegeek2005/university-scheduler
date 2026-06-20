@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Coordinator Control Room{% endblock %}
+{% block page_header %}Coordinator Control Room{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-6 mt-6">
+    
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+        <div class="flex items-start gap-4 mb-8">
+            <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-xl flex-shrink-0">
+                <i class="fa-solid fa-microchip"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-gray-900">Operations Research Engine</h2>
+                <p class="text-sm text-gray-500 mt-1">Trigger the CP-SAT solver to flush the old timetable and generate a mathematically optimized, clash-free master schedule.</p>
+            </div>
+        </div>
+
+        <button id="generateBtn" onclick="fireEngine()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 rounded-xl shadow-md transition flex justify-center items-center gap-3">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Initialize Schedule Matrix</span>
+        </button>
+
+        <div id="loadingState" class="hidden mt-6 text-center p-6 bg-gray-50 rounded-xl border border-gray-100">
+            <i class="fa-solid fa-circle-notch fa-spin text-3xl text-indigo-600 mb-3"></i>
+            <p class="text-gray-700 font-medium">Matrix sequence initiated...</p>
+            <p class="text-xs text-gray-500 mt-1">The CPU is currently calculating millions of permutations. This may take up to 15 seconds.</p>
+        </div>
+
+        <div id="resultConsole" class="hidden mt-6 p-4 rounded-xl border text-sm font-mono">
+            </div>
+    </div>
+</div>
+
+{% csrf_token %}
+
+<script>
+    function fireEngine() {
+        const btn = document.getElementById('generateBtn');
+        const loader = document.getElementById('loadingState');
+        const consoleBox = document.getElementById('resultConsole');
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        // 1. Update UI to "Loading"
+        btn.disabled = true;
+        btn.classList.replace('bg-indigo-600', 'bg-gray-400');
+        btn.classList.replace('hover:bg-indigo-700', 'hover:bg-gray-400');
+        loader.classList.remove('hidden');
+        consoleBox.classList.add('hidden');
+
+        // 2. Fire the POST request to your API Endpoint
+        fetch('/api/v1/generate-schedule/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken // Critical for Django security
+            }
+        })
+        .then(response => response.json().then(data => ({status: response.status, body: data})))
+        .then(res => {
+            // 3. Handle the Response
+            loader.classList.add('hidden');
+            consoleBox.classList.remove('hidden');
+            btn.disabled = false;
+            btn.classList.replace('bg-gray-400', 'bg-indigo-600');
+            btn.classList.replace('hover:bg-gray-400', 'hover:bg-indigo-700');
+
+            if (res.status === 200 || res.status === 201) {
+                // Success!
+                consoleBox.className = "mt-6 p-4 rounded-xl border text-sm font-mono bg-emerald-50 border-emerald-200 text-emerald-800";
+                consoleBox.innerHTML = `<i class="fa-solid fa-check-circle mr-2"></i> ${res.body.message || 'Master schedule generated successfully!'}`;
+            } else {
+                // The Matrix Crashed (Infeasible)
+                consoleBox.className = "mt-6 p-4 rounded-xl border text-sm font-mono bg-red-50 border-red-200 text-red-800";
+                consoleBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${res.body.error || 'Solver Failed: Infeasible Layout.'}`;
+            }
+        })
+        .catch(error => {
+            // Network or Server Error
+            loader.classList.add('hidden');
+            consoleBox.classList.remove('hidden');
+            consoleBox.className = "mt-6 p-4 rounded-xl border text-sm font-mono bg-red-50 border-red-200 text-red-800";
+            consoleBox.innerHTML = `<i class="fa-solid fa-plug-circle-xmark mr-2"></i> Critical Server Error: Check terminal logs.`;
+            btn.disabled = false;
+            btn.classList.replace('bg-gray-400', 'bg-indigo-600');
+        });
+    }
+</script>
+{% endblock %}

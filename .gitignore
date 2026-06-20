@@ -1,0 +1,19 @@
+cat << 'EOF' > .gitignore
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+
+# Database
+db.sqlite3
+
+# Backups and zips
+*.zip
+
+# VS Code settings
+.vscode/
+EOF
