@@ -5,14 +5,18 @@ An advanced, full-stack web application designed to solve the highly complex Con
 **Developer:** Muhammad  
 **Version:** 1.0.0  
 
+### 🧠 Under the Hood (The Optimization Engine)
+If you are a developer or recruiter curious about the underlying mathematics of this application, the core constraint programming logic is completely decoupled from the web views. You can explore the Google OR-Tools CP-SAT implementation and the hard/soft constraint definitions by navigating directly to the `scheduler/engine/` directory.
+
 ---
 
 ## 🚀 Key Features
 
 * **Algorithmic Constraint Engine:** Replaces manual scheduling by mapping real-world department rules (rooms, courses, teacher availability) into complex mathematical equations to eliminate double-booking and schedule conflicts.
-* **Role-Based Access Control (RBAC):** * **Coordinator Portal:** Manage domain entities, tweak constraints, and initialize the scheduling engine.
-  * **Faculty Dashboard:** Personalized views for teachers to see exactly when and where they are teaching.
-  * **Student Dashboard:** Dedicated cohort views showing section-specific class times and locations.
+* **Role-Based Access Control (RBAC):**  
+    * **Coordinator Portal:** Manage domain entities, tweak constraints, and initialize the scheduling engine.
+    * **Faculty Dashboard:** Personalized views for teachers to see exactly when and where they are teaching.
+    * **Student Dashboard:** Dedicated cohort views showing section-specific class times and locations.
 * **Dynamic Timetable UI:** Highly readable, responsive grid layouts built with Tailwind CSS, featuring dynamically calculated lecture duration slots.
 * **Platform Independent:** Designed to run seamlessly on both Linux and Windows environments.
 
@@ -31,7 +35,7 @@ This project is designed to be easily deployable on any local machine. Follow th
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/YOUR_USERNAME/university-scheduler.git](https://github.com/YOUR_USERNAME/university-scheduler.git)
+git clone https://github.com/coodgeek2005/university-scheduler.git
 cd university-scheduler
 ```
 
