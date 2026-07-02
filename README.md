@@ -2,15 +2,15 @@
 
 An advanced, full-stack web application designed to solve the highly complex Constraint Satisfaction Problem (CSP) of university scheduling. Built with **Django** and powered by the **Google OR-Tools (CP-SAT)** mathematical optimization engine, this system automatically generates 100% mathematically feasible, collision-free academic timetables in seconds.
 
-**Developer:** Muhammad  
+**Developer:** Muhammad bin Ramzan
 **Version:** 1.0.0  
 
-### 🧠 Under the Hood (The Optimization Engine)
+### Under the Hood (The Optimization Engine)
 If you are a developer or recruiter curious about the underlying mathematics of this application, the core constraint programming logic is completely decoupled from the web views. You can explore the Google OR-Tools CP-SAT implementation and the hard/soft constraint definitions by navigating directly to the `scheduler/engine/` directory.
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 * **Algorithmic Constraint Engine:** Replaces manual scheduling by mapping real-world department rules (rooms, courses, teacher availability) into complex mathematical equations to eliminate double-booking and schedule conflicts.
 * **Role-Based Access Control (RBAC):**  
@@ -20,7 +20,7 @@ If you are a developer or recruiter curious about the underlying mathematics of 
 * **Dynamic Timetable UI:** Highly readable, responsive grid layouts built with Tailwind CSS, featuring dynamically calculated lecture duration slots.
 * **Platform Independent:** Designed to run seamlessly on both Linux and Windows environments.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Backend:** Python 3.12, Django 6.x
 * **Optimization Engine:** Google OR-Tools (Constraint Programming - SAT Solver)
@@ -29,13 +29,13 @@ If you are a developer or recruiter curious about the underlying mathematics of 
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 This project is designed to be easily deployable on any local machine. Follow these steps to get the environment running:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/coodgeek2005/university-scheduler.git
+git clone https://github.com/codegeek2005/university-scheduler.git
 cd university-scheduler
 ```
 
